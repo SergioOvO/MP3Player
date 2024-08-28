@@ -1,0 +1,163 @@
+﻿<Window x:Class="Wpftest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpftest"
+        mc:Ignorable="d"
+        Title="{Binding PlayerTitle}" Height="450" Width="800">
+    <Grid Margin="10 5 10 5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox 
+                x:Name="_SongPathTextBox" 
+                Text="{Binding SongsDictionaryPath}"
+                Margin="0"
+                Width="auto" Grid.Column="0" 
+                FontSize="16" 
+                HorizontalContentAlignment="Left"
+                VerticalContentAlignment="Center"
+                Background="#fafafa"/>
+            <Button 
+                Style="{StaticResource TextButton}"
+                Content="更 新" 
+                ToolTip="输入音乐文件夹路径，更新播放列表"
+                Grid.Column="1" 
+                Width="60" 
+                Height="24" 
+                Margin="5 0 0 0" 
+                FontSize="14"
+                Click="updateSongs"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <MediaElement 
+                Grid.Row="0"
+                x:Name="_MediaElement" 
+                LoadedBehavior="Manual" 
+                MediaEnded="_MediaElement_MediaEnded"/>
+            <TextBlock  
+                Grid.Row="1" 
+                x:Name="_TextBlock" 
+                Text="{Binding MusicText}" 
+                Margin="0 5 0 5"
+                Foreground="#fb6f92" 
+                FontSize="20"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"/>
+            <ScrollViewer 
+                Grid.Row="2"                 
+                Focusable="True"     
+                CanContentScroll="True" 
+                Margin="0 0 0 0"
+                PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                <ListBox 
+                    x:Name="_SongsListBox" 
+                    Style="{StaticResource DiyListBox}"
+                    Margin="0 0 0 0"
+                    DisplayMemberPath="songName"
+                    SelectedValuePath="songPath"
+                    MouseDoubleClick="_SongsListBox_MouseDoubleClick"
+                    ItemsSource="{Binding Songs}"/>
+            </ScrollViewer>
+        </Grid>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" Margin="0 5 0 0">
+            <Button 
+                Style="{StaticResource RoundButton}"
+                Height="30" 
+                Margin="5" 
+                Click="Change_Play_Mode"
+                ToolTip="{Binding PlayModeToolTip}">
+                <Image x:Name="_playModeIcon" Source="{StaticResource Sequential}" Margin="0 0 0 0" Height="18"></Image>
+            </Button>
+            <Button 
+                Style="{StaticResource RoundButton}" 
+                Height="40" 
+                Margin="5" 
+                Click="lastSong">
+                <Image Source="{StaticResource LastSongIcon}" Margin="0 0 0 0" Height="14"></Image>
+            </Button>
+            <Button 
+                x:Name="_playButton" 
+                Style="{StaticResource RoundButton}"
+                Height="40" 
+                Margin="5" 
+                Click="Play_Stop_Media">
+                <Image x:Name="_playIcon" Source="{StaticResource PlayIcon}" Margin="0 0 0 0" Height="22"></Image>
+            </Button>
+            <Button 
+                Style="{StaticResource RoundButton}"
+                Height="40" 
+                Margin="5" 
+                Click="nextSong">
+                <Image Source="{StaticResource NextSongIcon}" Margin="0 0 0 0" Height="14"></Image>
+            </Button>
+            <Button 
+                Style="{StaticResource RoundButton}"
+                Height="30" 
+                Margin="5" 
+                Click="Volume_Button_Click">
+                <Image x:Name="_volumeIcon" Source="{StaticResource VolumeIcon}" Margin="0" Height="16" ></Image>
+            </Button>
+            
+            <Slider
+                x:Name="_Slider" 
+                Style="{StaticResource DiySlider}"
+                Width="100" 
+                VerticalAlignment="Center"
+                IsMoveToPointEnabled="True"
+                Minimum="0"
+                Maximum="1" 
+                Value="0.5" 
+                ValueChanged="_Volume_Slider_ValueChanged"
+            />
+        </StackPanel>
+
+        <Grid Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="90"/>
+                </Grid.ColumnDefinitions>
+                <Slider 
+                    x:Name="_seekBar" 
+                    Style="{StaticResource DiySlider}"
+                    Grid.Column="0"
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Center"
+                    Minimum="0" 
+                    ValueChanged="_seekBar_ValueChanged"
+                    IsMoveToPointEnabled="True"
+                    Thumb.DragStarted="_seekBar_DragStarted"
+                    Thumb.DragCompleted="_seekBar_DragCompleted"
+                />
+                <TextBlock 
+                    x:Name="_timeTextBlock"
+                    Grid.Column="1" 
+                    Foreground="{StaticResource TextColor1a2a3a}"
+                    Text="00:00/00:00" 
+                    FontSize="14"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                />
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

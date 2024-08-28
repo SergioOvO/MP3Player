@@ -1,0 +1,18 @@
+﻿<Application x:Class="Wpftest.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Wpftest"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Colors.xaml"/>
+                <ResourceDictionary Source="SvgIcon.xaml"/>
+                <ResourceDictionary Source="RoundButton.xaml"/>
+                <ResourceDictionary Source="TextButton.xaml"/>
+                <ResourceDictionary Source="DiyListBox.xaml"/>
+                <ResourceDictionary Source="DiySlider.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
